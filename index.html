@@ -37,16 +37,43 @@
         </div>
     </div>
     <div class="bottombox">
-        <div class="input"></div>
+        <div class="input">Proceso:</div>
         <div class="options">
             <div class="option-btn">Insertar tarjeta</div>
             <div class="option-btn">Ingresar PIN</div>
             <div class="option-btn">Ingresar cantidad</div>
             <div class="option-btn">Tomar dinero</div>
             <div class="option-btn">Sacar tarjeta</div>
-            
+
             <div class="option-btn" id="start-btn">Iniciar</div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".option-btn:not(#start-btn)");
+            const inputDiv = document.querySelector(".input");
+
+            buttons.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    // Crear un clon del botón
+                    const clone = btn.cloneNode(true);
+
+                    clone.classList.add("cloned-btn"); 
+                    
+                    // Opcional: reducir su tamaño
+                    clone.style.scale = "0.9";
+
+                    // Agregar evento para eliminar el clon al hacer clic
+                    clone.addEventListener("click", () => {
+                        clone.remove();
+                    });
+                    
+                    // Insertar el clon dentro del div .input
+                    inputDiv.appendChild(clone);
+                });
+            });
+        });
+        </script>
 </body>
 </html>

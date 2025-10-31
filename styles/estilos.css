@@ -14,6 +14,7 @@ body{
     background-color: rgb(45, 41, 61);
     width: 100vw;
     height: 80vh;
+    border-bottom: solid 5px rgb(28, 23, 36);
 }
 
     .displaybox{
@@ -102,6 +103,7 @@ body{
                 font-size: 25px;
                 color: rgb(49, 48, 51);
                 text-shadow: 2px 0 2px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 3px rgb(97, 93, 100);
             }
 
                 #x-btn{
@@ -121,10 +123,24 @@ body{
 }
 
     .input{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         width: 100vw;
         height: 10vh;
-        background-color: white;
+        background-color: rgb(197, 197, 197);
+        font-family: 'Bebas Neue';
+        font-size: 25px;
+        padding: 0 2.5%;
+
+        overflow-x: auto;             /* Habilita scroll horizontal */
+        overflow-y: hidden;           /* Evita scroll vertical */
+        white-space: nowrap;          /* Evita que los elementos bajen de línea */
     }
+
+        .input::-webkit-scrollbar {
+            display: none;
+        }
 
     .options{
         display: flex;
@@ -150,7 +166,19 @@ body{
             border-radius: 10px;
             padding: 0 10px;
             letter-spacing: 1px;
+
+            /* 🔹 Efecto visual base */
+            box-shadow: 0 3px rgb(201, 150, 10);
+            transition: all 0.1s ease-in-out;
+            cursor: pointer;
         }
+
+            
+            .option-btn:active {
+                /* 🔹 Se hunde ligeramente */
+                transform: translateY(3px);
+                box-shadow: 0 0px rgb(160, 130, 5);
+            }
 
             #start-btn{
                 margin-left: auto;
@@ -159,4 +187,24 @@ body{
                 color: white;
                 letter-spacing: 3px;
                 padding: 0 20px;
+
+                box-shadow: 0 3px rgb(1, 143, 55);
             }
+
+                #start-btn:active {
+                    transform: translateY(3px);
+                    box-shadow: 0 0px rgb(1, 143, 55);
+                }
+            
+            .cloned-btn{
+                background-color: rgb(99, 99, 99);
+                border: solid 3px rgb(44, 44, 44);
+                color: whitesmoke;
+                box-shadow: none;
+                transition: background-color 0.1s ease-in-out;
+            }
+
+                .cloned-btn:hover{
+                    transform: translateY(0);
+                    background-color: rgb(175, 2, 2);
+                }
