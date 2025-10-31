@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Lemon Milk';
+  src: url('../fonts/LEMONMILK-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('../fonts/BebasNeue-Regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -3,9 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cajero Autom&aacute;tico</title>
+    <link rel="stylesheet" href="styles/estilos.css">
+    <link rel="stylesheet" href="styles/fonts.css">
 </head>
 <body>
-    
+    <div class="cajero">
+        <div class="displaybox">
+            <div class="display"></div>
+        </div>
+        <div class="components">
+            <div class="card-space">
+                <div class="cs-line"></div>
+            </div>
+            <div class="dispenser"></div>
+            <div class="digit-box">
+                <div class="digit-btn">1</div>
+                <div class="digit-btn">2</div>
+                <div class="digit-btn">3</div>
+
+                <div class="digit-btn">4</div>
+                <div class="digit-btn">5</div>
+                <div class="digit-btn">6</div>
+
+                <div class="digit-btn">7</div>
+                <div class="digit-btn">8</div>
+                <div class="digit-btn">9</div>
+
+                <div class="digit-btn" id="x-btn">&times;</div>
+                <div class="digit-btn">0</div>
+                <div class="digit-btn" id="check-btn">&#10004;</div>
+            </div>
+        </div>
+    </div>
+    <div class="bottombox">
+        <div class="input"></div>
+        <div class="options">
+            <div class="option-btn">Insertar tarjeta</div>
+            <div class="option-btn">Ingresar PIN</div>
+            <div class="option-btn">Ingresar cantidad</div>
+            <div class="option-btn">Tomar dinero</div>
+            <div class="option-btn">Sacar tarjeta</div>
+            
+            <div class="option-btn" id="start-btn">Iniciar</div>
+        </div>
+    </div>
 </body>
 </html>
