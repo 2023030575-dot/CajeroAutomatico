@@ -2,9 +2,10 @@ import { Automata } from './automata.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const automata = new Automata();
-    const buttons = document.querySelectorAll(".option-btn:not(#start-btn)");
+    const buttons = document.querySelectorAll(".option-btn:not(#start-btn, #delete-btn)");
     const inputDiv = document.querySelector(".input");
     const startBtn = document.querySelector("#start-btn");
+    const deleteBtn = document.querySelector("#delete-btn");
 
     const process = []; // Eventos del proceso
     const clones = [];  // 🔹 Guardará referencias a los clones en orden
@@ -32,14 +33,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- 🔹 Función para iluminar el clon según el evento ---
-    async function iluminarPaso(index) {
+    async function glowStep(index) {
         const clone = clones[index];
         if (!clone) return;
 
-        clone.classList.add("activo");
+        clone.classList.add("active");
         await new Promise(res => setTimeout(res, 800)); // Tiempo de iluminación
-        clone.classList.remove("activo");
+        clone.classList.remove("active");
     }
+
+    // --- Botón BORRAR: elimina todos los clones y limpia el proceso ---
+    deleteBtn.addEventListener("click", () => {
+        inputDiv.innerHTML = "Proceso:"; // 🔹 Limpia la zona visual
+        process.length = 0;              // 🔹 Vacía el arreglo de eventos
+        clones.length = 0;               // 🔹 Vacía el arreglo de clones
+        console.clear();
+        console.log("Se han borrado todos los eventos del proceso.");
+    });
 
     // --- Iniciar el autómata ---
     startBtn.addEventListener("click", async () => {
@@ -54,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (event) {
                 // 🔹 Iluminar el clon antes de procesarlo
-                await iluminarPaso(i);
+                await glowStep(i);
                 automata.transition(event);
                 console.log(`→ Evento '${text}' (${event}) leído, nuevo estado:`, automata.state);
             } else {
