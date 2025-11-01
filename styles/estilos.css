@@ -208,3 +208,12 @@ body{
                     transform: translateY(0);
                     background-color: rgb(175, 2, 2);
                 }
+
+                /* --- EFECTO DE ILUMINACIÓN --- */
+                .cloned-btn.activo {
+                    background-color: rgb(0, 64, 184);
+                    border-color: rgb(0, 10, 143);
+                    color: white;
+                    transform: scale(1.05);
+                    box-shadow: 0 0 10px rgb(0, 64, 184, 0.8);
+                }
