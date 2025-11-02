@@ -45,8 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         clone.classList.add("active");
-        await new Promise(res => setTimeout(res, 800)); // Tiempo de iluminación
-        clone.classList.remove("active");
     }
 
     // --- Botón BORRAR: elimina todos los clones y limpia el proceso ---
@@ -79,25 +77,28 @@ document.addEventListener("DOMContentLoaded", () => {
         // 🔹 Obtener los clones actuales
         const clones = inputDiv.querySelectorAll(".cloned-btn");
 
+        // 🔹 Animar el estado inicial q0 antes de comenzar
+        await animateState(automata.state);
+
         for (let i = 0; i < process.length; i++) {
             const text = process[i];
             const event = translateEvent(text);
 
             if (event) {
-                await glowStep(i);
-                automata.transition(event);
+                await glowStep(i);                // Iluminar el clon
+                automata.transition(event);       // Cambiar estado
+                await animateState(automata.state); // Animar el nuevo estado
+                // 🔹 Una vez terminada la animación, quitar la iluminación
+                clones[i]?.classList.remove("active");
             } else {
                 console.warn(`Evento desconocido: "${text}"`);
                 break;
             }
 
-            // 🔹 Si el autómata entra en un estado vertedero
+            // 🔹 Verificar si entró a un estado vertedero
             if (sinkStates.includes(automata.state)) {
                 console.warn(`Estado vertedero alcanzado: q${automata.state}. Proceso detenido.`);
-
                 badProcess();
-
-                // Salir del bucle
                 return;
             }
         }
@@ -150,4 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
             clones.forEach(c => c.classList.remove("correct"));
         }, 3000);
     }
+
+    // --- 🔹 Animación del estado actual ---
+    async function animateState(state) {
+        const display = document.querySelector(".display");
+
+        // Se puede adaptar la animación según el número del estado
+        display.classList.add(`state-q${state}`);
+        console.log(`Animando estado q${state}`);
+
+        // Duración de la animación (ajústala según tu CSS)
+        await new Promise(res => setTimeout(res, 3000));
+
+        display.classList.remove(`state-q${state}`);
+    }
+
 });

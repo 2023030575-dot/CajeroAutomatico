@@ -1,0 +1,18 @@
+.display.state-q0 {
+    animation: q0Anim 3s ease;
+}
+.display.state-q1 {
+    animation: q1Anim 3s ease;
+}
+/* ... y así con cada estado */
+
+@keyframes q0Anim {
+    0% { background-color: rgb(58, 73, 212) }
+    100% { background-color: rgb(73, 146, 241); }
+}
+
+@keyframes q1Anim {
+    0% { background-color: rgb(65, 138, 233); }
+    50% { background-color: rgb(255, 200, 0); }
+    100% { background-color: rgb(65, 138, 233); }
+}
