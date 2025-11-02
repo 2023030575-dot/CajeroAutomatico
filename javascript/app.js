@@ -54,6 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Iniciar el autómata ---
     startBtn.addEventListener("click", async () => {
         console.clear();
+
+        // 🔹 Validar que haya pasos antes de iniciar
+        if (process.length === 0) {
+            alert("⚠️ Debe ingresar al menos un paso antes de iniciar la simulación.");
+            console.warn("Intento de iniciar sin pasos en el proceso.");
+            return;
+        }
+
         automata.restart();
 
         console.log("Ejecutando proceso:", process);
@@ -92,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // 🔹 Verificar si el estado final NO es el estado de aceptación
         if (automata.state !== 13) {
             console.warn(`Proceso incorrecto: terminó en q${automata.state} en lugar de q13.`);
-
             badProcess();
 
             return;
