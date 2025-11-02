@@ -226,6 +226,58 @@ document.addEventListener("DOMContentLoaded", () => {
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
 
+            case 3:
+            // --- Estado q3: Ingreso de PIN ---
+            display.textContent = "";
+            display.classList.add("state-q3");
+
+            // 🔹 Escribir mensaje principal
+            const textPIN = "INGRESE SU PIN";
+            let j = 0;
+            const intervalPIN = setInterval(() => {
+                display.textContent += textPIN[j];
+                j++;
+                if (j === textPIN.length) clearInterval(intervalPIN);
+            }, 70);
+
+            await new Promise(res => setTimeout(res, textPIN.length * 70 + 400));
+
+            // 🔹 Crear los espacios del PIN (____)
+            const pinContainer = document.createElement("div");
+            pinContainer.classList.add("pin-container");
+            pinContainer.textContent = "____";
+            display.appendChild(pinContainer);
+
+            await new Promise(res => setTimeout(res, 800));
+
+            // 🔹 Seleccionamos los botones del keypad
+            const digits = document.querySelectorAll(".digit-btn");
+            const pinSequence = ["1", "2", "3", "4"];
+
+            // 🔹 Animar la presión de botones y mostrar asteriscos
+            for (let j = 0; j < pinSequence.length; j++) {
+                const btn = Array.from(digits).find(d => d.textContent === pinSequence[j]);
+                if (btn) {
+                    btn.classList.add("press");
+                    await new Promise(res => setTimeout(res, 150)); // tiempo presionado
+                    btn.classList.remove("press");
+
+                    // 🔹 Reemplaza el guion bajo correspondiente por "*"
+                    pinContainer.textContent =
+                        pinContainer.textContent.substring(0, j) + "*" + pinContainer.textContent.substring(j + 1);
+
+                    await new Promise(res => setTimeout(res, 400)); // pausa entre dígitos
+                }
+            }
+
+            // 🔹 Esperar un poco al final
+            await new Promise(res => setTimeout(res, 1000));
+
+            // 🔹 Limpia el mensaje antes del siguiente estado
+            display.textContent = "";
+            display.classList.remove("state-q3");
+            break;
+
             default:
                 // --- Otros estados (animación genérica) ---
                 display.classList.add(`state-q${state}`);
