@@ -76,6 +76,7 @@ body{
                 transform: translateY(0);
                 transition: opacity 0.3s ease;
                 overflow: hidden;
+                z-index: 3; 
             }
 
                 /* 🔹 Banda blanca */
@@ -90,7 +91,8 @@ body{
                     border-radius: 3px;
                 }
 
-        .dispenser{
+        /* --- DISPENSADOR --- */
+        .dispenser {
             width: 100%;
             height: 20%;
             background-color: rgb(34, 33, 36);
@@ -102,7 +104,52 @@ body{
                 transparent 3px,          /* espacio después de la línea */
                 transparent 20px          /* distancia entre líneas */
             );
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.6s ease;
+            z-index: 1;
         }
+
+            /* --- CAMBIO DE COLOR AL DISPENSAR --- */
+            .dispenser.open {
+                background-color: black;
+                background-image: none;
+            }
+
+            /* --- BILLETE --- */
+            .bill {
+                position: absolute;
+                bottom: -70%; /* oculto dentro */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80%;
+                height: 60%;
+                background: rgb(10, 129, 10);
+                border: solid 3px rgb(11, 102, 46);
+                border-radius: 6px;
+                transition: bottom 0.8s ease, opacity 0.8s ease;
+                z-index: 2;
+            }
+
+                
+                /* --- CÍRCULO CENTRAL (detalle del billete) --- */
+                .bill::before {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    width: 40%;
+                    height: 90%;
+                    background-color: rgb(48, 190, 48);
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%);
+                    opacity: 1;
+                }
+
+                /* --- BILLETE SALE --- */
+                .bill.out {
+                    bottom: -5%;
+                }
 
         .digit-box{
             display: flex;

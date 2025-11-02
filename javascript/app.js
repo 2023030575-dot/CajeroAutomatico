@@ -158,10 +158,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetCajero() {
         const display = document.querySelector(".display");
         const card = document.querySelector(".card");
+        const dispenser = document.querySelector(".dispenser");
+        const bill = document.querySelector(".bill");
 
         // 🔹 Eliminar todas las clases de animación
         display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4", "state-q5");
         card.classList.remove("insert");
+        dispenser.classList.remove("open");
+        bill.classList.remove("out")
 
         // 🔹 Restaurar contenido y estilos
         display.textContent = "";
@@ -378,6 +382,26 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(res => setTimeout(res, 150));
             check.classList.remove("press");
 
+            // --- Animación del dispensador y salida del billete ---
+            const dispenser = document.querySelector(".dispenser");
+
+            // Crear el billete si no existe
+            let bill = dispenser.querySelector(".bill");
+            if (!bill) {
+                bill = document.createElement("div");
+                bill.classList.add("bill");
+                dispenser.appendChild(bill);
+            }
+
+            // Cambiar fondo del dispensador a negro
+            dispenser.classList.add("open");
+
+            // Esperar un momento antes de sacar el billete
+            await new Promise(res => setTimeout(res, 600));
+
+            // Sacar el billete
+            bill.classList.add("out");
+
             // 🔹 Esperar un poco antes de limpiar
             await new Promise(res => setTimeout(res, 1500));
 
@@ -385,6 +409,23 @@ document.addEventListener("DOMContentLoaded", () => {
             display.textContent = "";
             display.classList.remove("state-q6");
             break;
+
+            case 7:
+                display.textContent = ""; // limpia el texto anterior
+                // --- Estado q2: Error -> No se ha insertado la tarjeta ---
+                display.classList.add("state-q7");
+
+                const textError4 = "NO PUEDES INGRESAR EL PIN 2 VECES";
+                let i6 = 0;
+                const interval5 = setInterval(() => {
+                    display.textContent += textError4[i6];
+                    i6++;
+                    if (i6 === textError4.length) clearInterval(interval5);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError4.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
+                break;
         }
     }
 
