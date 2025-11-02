@@ -318,6 +318,73 @@ document.addEventListener("DOMContentLoaded", () => {
                 await new Promise(res => setTimeout(res, textError3.length * 70 + 2000));
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
+
+            case 6:
+            // --- Estado q6: Ingreso de cantidad a retirar ---
+            display.textContent = "";
+            display.classList.add("state-q6");
+
+            // 🔹 Escribir mensaje principal
+            const textAmount = "INGRESE LA CANTIDAD A RETIRAR";
+            let i5 = 0;
+            const interval4 = setInterval(() => {
+                display.textContent += textAmount[i5];
+                i5++;
+                if (i5 === textAmount.length) clearInterval(interval4);
+            }, 70);
+
+            await new Promise(res => setTimeout(res, textAmount.length * 70 + 400));
+
+            // 🔹 Crear contenedor para el monto
+            const amountContainer = document.createElement("div");
+            amountContainer.classList.add("amount-container");
+
+            // 🔹 Agregar el símbolo de dinero y el espacio para el monto
+            const symbol = document.createElement("span");
+            symbol.textContent = "$";
+            symbol.classList.add("money-symbol");
+
+            const amountText = document.createElement("span");
+            amountText.classList.add("money-amount");
+            amountText.textContent = "";
+
+            amountContainer.appendChild(symbol);
+            amountContainer.appendChild(amountText);
+            display.appendChild(amountContainer);
+
+            await new Promise(res => setTimeout(res, 800));
+
+            // 🔹 Simular la entrada de "5000" usando los botones
+            const digits6 = document.querySelectorAll(".digit-btn");
+            const amountSequence = ["5", "0", "0", "0"];
+
+            for (let j = 0; j < amountSequence.length; j++) {
+                const btn = Array.from(digits6).find(d => d.textContent === amountSequence[j]);
+                if (btn) {
+                    btn.classList.add("press");
+                    await new Promise(res => setTimeout(res, 150));
+                    btn.classList.remove("press");
+
+                    // 🔹 Mostrar número en pantalla junto al símbolo $
+                    amountText.textContent += amountSequence[j];
+
+                    await new Promise(res => setTimeout(res, 400));
+
+                }
+            }
+
+            const check = document.getElementById("check-btn")
+            check.classList.add("press");
+            await new Promise(res => setTimeout(res, 150));
+            check.classList.remove("press");
+
+            // 🔹 Esperar un poco antes de limpiar
+            await new Promise(res => setTimeout(res, 1500));
+
+            // 🔹 Limpia el mensaje antes del siguiente estado
+            display.textContent = "";
+            display.classList.remove("state-q6");
+            break;
         }
     }
 
