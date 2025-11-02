@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (sinkStates.includes(automata.state)) {
                 console.warn(`Estado vertedero alcanzado: q${automata.state}. Proceso detenido.`);
                 badProcess();
+                resetCajero();
                 return;
             }
         }
@@ -179,9 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         switch (state) {
             case 0:
-                // 🔹 Pantalla de bienvenida
+                // --- Estado q0: Bienvenida ---
                 display.classList.add("state-q0");
-                display.textContent = "";
                 display.addEventListener("animationend", function handler() {
                     const text = "BIENVENIDO";
                     let i = 0;
@@ -192,26 +192,44 @@ document.addEventListener("DOMContentLoaded", () => {
                     }, 100);
                     display.removeEventListener("animationend", handler);
                 });
-                await new Promise(res => setTimeout(res, 4000));
+                await new Promise(res => setTimeout(res, 3000));
                 break;
 
             case 1:
-                // mostrar la tarjeta (en el flujo visual)
+                // --- Estado q1: Inserción de tarjeta ---
                 card.style.display = 'block';
-
-                // activar animación
                 card.classList.add('insert');
 
-                // opcional: ocultar de nuevo tras terminar la animación
                 card.addEventListener('animationend', () => {
-                card.style.display = 'none';
-                card.classList.remove('insert');
-                });
+                    // 🔹 Termina la animación dejando parte visible
+                    card.style.display = "none";
+                    card.classList.remove('insert');
+                }, { once: true });
+
+                await new Promise(res => setTimeout(res, 4000));
+                break;
+
+            case 2:
+                display.textContent = ""; // limpia el texto anterior
+                // --- Estado q2: Error -> No se ha insertado la tarjeta ---
+                display.classList.add("state-q2");
+
+                const textError = "AUN NO HAS INSERTADO LA TARJETA";
+                let i = 0;
+                const interval = setInterval(() => {
+                    display.textContent += textError[i];
+                    i++;
+                    if (i === textError.length) clearInterval(interval);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
+                break;
 
             default:
-                // Otros estados que animarán el display o simplemente cambiarán color
+                // --- Otros estados (animación genérica) ---
                 display.classList.add(`state-q${state}`);
-                await new Promise(res => setTimeout(res, 4000));
+                await new Promise(res => setTimeout(res, 3000));
                 display.classList.remove(`state-q${state}`);
                 break;
         }
