@@ -37,6 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const clone = clones[index];
         if (!clone) return;
 
+        // 🔹 Asegurar que el clon sea visible al activarse
+        clone.scrollIntoView({
+            behavior: "smooth",  // movimiento suave
+            block: "nearest",    // se alinea sin mover demasiado
+            inline: "center"     // centra horizontalmente si el contenedor es horizontal
+        });
+
         clone.classList.add("active");
         await new Promise(res => setTimeout(res, 800)); // Tiempo de iluminación
         clone.classList.remove("active");
