@@ -49,12 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Botón BORRAR: elimina todos los clones y limpia el proceso ---
     deleteBtn.addEventListener("click", () => {
+        resetCajero();
         inputDiv.innerHTML = "Proceso:"; // 🔹 Limpia la zona visual
         process.length = 0;              // 🔹 Vacía el arreglo de eventos
         clones.length = 0;               // 🔹 Vacía el arreglo de clones
         console.clear();
         console.log("Se han borrado todos los eventos del proceso.");
-        resetCajero();
     });
 
     // --- Iniciar el autómata ---
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.querySelector(".card");
 
         // 🔹 Eliminar todas las clases de animación
-        display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4");
+        display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4", "state-q5");
         card.classList.remove("insert");
 
         // 🔹 Restaurar contenido y estilos
@@ -299,6 +299,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 70);
 
                 await new Promise(res => setTimeout(res, textError2.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
+                break;
+
+            case 5:
+                display.textContent = ""; // limpia el texto anterior
+                // --- Estado q2: Error -> No se ha insertado la tarjeta ---
+                display.classList.add("state-q5");
+
+                const textError3 = "AUN NO HAS INGRESADO EL PIN";
+                let i4 = 0;
+                const interval3 = setInterval(() => {
+                    display.textContent += textError3[i4];
+                    i4++;
+                    if (i4 === textError3.length) clearInterval(interval3);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError3.length * 70 + 2000));
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
         }
