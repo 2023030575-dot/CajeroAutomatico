@@ -34,7 +34,7 @@ body{
             border-color: rgb(28, 23, 36);
         }
 
-    .components{
+        .components {
         display: flex;
         flex-direction: column;
         gap: 7%;
@@ -42,9 +42,9 @@ body{
         height: 80vh;
         padding: 3%;
         border-left: solid 5px rgb(28, 23, 36);
-    }
+        }
 
-        .card-space{
+        .card-space {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -52,16 +52,43 @@ body{
             height: 15%;
             background-color: rgb(151, 147, 163);
             border-radius: 20px;
-            border: solid 3px;
-            border-color: rgb(108, 104, 112);
+            border: solid 3px rgb(108, 104, 112);
+            position: relative;
         }
 
-            .cs-line{
+            .cs-line {
                 width: 80%;
                 height: 15%;
                 background-color: black;
                 border-radius: 50%;
+                z-index: 1;
             }
+
+            /* --- Tarjeta --- */
+            .card {
+                position: absolute;
+                width: 70%;
+                height: 150%;
+                background: linear-gradient(145deg, #b6c90d, #e9e517);
+                border-radius: 10px;
+                top: 100%; /* comienza debajo de la ranura */
+                opacity: 0;
+                transform: translateY(0);
+                transition: opacity 0.3s ease;
+                overflow: hidden;
+            }
+
+                /* 🔹 Banda blanca */
+                .card::before {
+                    content: "";
+                    position: absolute;
+                    top: 20%; /* posición vertical de la banda */
+                    left: 0;
+                    width: 100%;
+                    height: 20%; /* grosor de la banda */
+                    background-color: white;
+                    border-radius: 3px;
+                }
 
         .dispenser{
             width: 100%;

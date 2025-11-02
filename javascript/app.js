@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clones.length = 0;               // 🔹 Vacía el arreglo de clones
         console.clear();
         console.log("Se han borrado todos los eventos del proceso.");
+        resetCajero();
     });
 
     // --- Iniciar el autómata ---
@@ -109,13 +110,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (automata.state !== 13) {
             console.warn(`Proceso incorrecto: terminó en q${automata.state} en lugar de q13.`);
             badProcess();
+            resetCajero();
 
             return;
         } else {
             console.log(`Proceso correcto: terminó en q${automata.state}`);
-
             correctProcess();
-
+            resetCajero();
+            
             return;
         }
     });
@@ -152,36 +154,67 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
+    function resetCajero() {
+        const display = document.querySelector(".display");
+        const card = document.querySelector(".card");
+
+        // 🔹 Eliminar todas las clases de animación
+        display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4");
+        card.classList.remove("insert");
+
+        // 🔹 Restaurar contenido y estilos
+        display.textContent = "";
+        display.style.backgroundColor = ""; // vuelve al color por defecto
+        card.style.display = "none"; // oculta la tarjeta
+
+        console.log("🔄 Cajero reiniciado al estado inicial");
+    }
+
     // --- 🔹 Animación del estado actual ---
     async function animateState(state) {
         const display = document.querySelector(".display");
+        const card = document.querySelector(".card");
 
-        display.classList.add(`state-q${state}`);
         console.log(`Animando estado q${state}`);
 
-        // 🔹 Si es el estado q0, agregamos el efecto "Bienvenido"
-        if (state === 0) {
-            display.textContent = ""; // Limpiar antes de animar
-            display.addEventListener("animationend", function handler() {
-                const text = "BIENVENIDO";
-                let i = 0;
+        switch (state) {
+            case 0:
+                // 🔹 Pantalla de bienvenida
+                display.classList.add("state-q0");
+                display.textContent = "";
+                display.addEventListener("animationend", function handler() {
+                    const text = "BIENVENIDO";
+                    let i = 0;
+                    const interval = setInterval(() => {
+                        display.textContent += text[i];
+                        i++;
+                        if (i === text.length) clearInterval(interval);
+                    }, 100);
+                    display.removeEventListener("animationend", handler);
+                });
+                await new Promise(res => setTimeout(res, 4000));
+                break;
 
-                const interval = setInterval(() => {
-                    display.textContent += text[i];
-                    i++;
-                    if (i === text.length) clearInterval(interval);
-                }, 150);
+            case 1:
+                // mostrar la tarjeta (en el flujo visual)
+                card.style.display = 'block';
 
-                // 🔹 Eliminar el listener después de ejecutarse una vez
-                display.removeEventListener("animationend", handler);
-            });
+                // activar animación
+                card.classList.add('insert');
+
+                // opcional: ocultar de nuevo tras terminar la animación
+                card.addEventListener('animationend', () => {
+                card.style.display = 'none';
+                card.classList.remove('insert');
+                });
+
+            default:
+                // Otros estados que animarán el display o simplemente cambiarán color
+                display.classList.add(`state-q${state}`);
+                await new Promise(res => setTimeout(res, 4000));
+                display.classList.remove(`state-q${state}`);
+                break;
         }
-
-        // Esperar duración de la animación (ajústala según tu CSS)
-        await new Promise(res => setTimeout(res, 10000));
-
-        display.classList.remove(`state-q${state}`);
     }
-
 
 });
