@@ -217,7 +217,7 @@ body{
                 border: solid 3px rgb(44, 44, 44);
                 color: whitesmoke;
                 box-shadow: none;
-                transition: background-color 0.1s ease-in-out;
+                transition: background-color 0.3s ease, transform 0.1s ease;
             }
 
                 .cloned-btn:hover{
@@ -232,4 +232,18 @@ body{
                     color: white;
                     transform: scale(1.05);
                     box-shadow: 0 0 10px rgb(0, 64, 184, 0.8);
+                }
+
+                .cloned-btn.error {
+                    background-color: rgb(214, 0, 0);
+                    border-color: rgb(150, 0, 0);
+                    color: white;
+                    box-shadow: 0 0 10px rgb(214, 0, 0, 0.8);
+                }
+
+                .cloned-btn.correct {
+                    background-color: rgb(7, 214, 0);
+                    border-color: rgb(12, 150, 0);
+                    color: white;
+                    box-shadow: 0 0 10px rgb(7, 214, 0, 0.8);
                 }

@@ -58,24 +58,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
         console.log("Ejecutando proceso:", process);
 
+        // 🔹 Estados vertedero (errores)
+        const sinkStates = [2, 4, 5, 7, 8, 10, 11, 12];
+
+        // 🔹 Obtener los clones actuales
+        const clones = inputDiv.querySelectorAll(".cloned-btn");
+
         for (let i = 0; i < process.length; i++) {
             const text = process[i];
             const event = translateEvent(text);
 
             if (event) {
-                // 🔹 Iluminar el clon antes de procesarlo
                 await glowStep(i);
                 automata.transition(event);
-                console.log(`→ Evento '${text}' (${event}) leído, nuevo estado:`, automata.state);
             } else {
                 console.warn(`Evento desconocido: "${text}"`);
+                break;
             }
 
-            // 🔹 Pequeña pausa entre cada evento
-            await new Promise(res => setTimeout(res, 400));
+            // 🔹 Si el autómata entra en un estado vertedero
+            if (sinkStates.includes(automata.state)) {
+                console.warn(`Estado vertedero alcanzado: q${automata.state}. Proceso detenido.`);
+
+                badProcess();
+
+                // Salir del bucle
+                return;
+            }
         }
 
         console.log("Ejecución terminada. Estado final:", automata.state);
+
+        // 🔹 Verificar si el estado final NO es el estado de aceptación
+        if (automata.state !== 13) {
+            console.warn(`Proceso incorrecto: terminó en q${automata.state} en lugar de q13.`);
+
+            badProcess();
+
+            return;
+        } else {
+            console.log(`Proceso correcto: terminó en q${automata.state}`);
+
+            correctProcess();
+
+            return;
+        }
     });
 
     // --- Traductor de eventos ---
@@ -88,5 +115,25 @@ document.addEventListener("DOMContentLoaded", () => {
             "Sacar tarjeta": "e"
         };
         return map[text] || null;
+    }
+
+    function badProcess(){
+        // Iluminar todos los clones en rojo
+        clones.forEach(c => c.classList.add("error"));
+
+        // Esperar 3 segundos y quitar el color de error
+        setTimeout(() => {
+            clones.forEach(c => c.classList.remove("error"));
+        }, 3000);
+    }
+
+    function correctProcess(){
+        // Iluminar todos los clones en verde
+        clones.forEach(c => c.classList.add("correct"));
+
+        // Esperar 3 segundos y quitar el color de exito
+        setTimeout(() => {
+            clones.forEach(c => c.classList.remove("correct"));
+        }, 3000);
     }
 });
