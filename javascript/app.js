@@ -233,11 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 🔹 Escribir mensaje principal
             const textPIN = "INGRESE SU PIN";
-            let j = 0;
+            let i2 = 0;
             const intervalPIN = setInterval(() => {
-                display.textContent += textPIN[j];
-                j++;
-                if (j === textPIN.length) clearInterval(intervalPIN);
+                display.textContent += textPIN[i2];
+                i2++;
+                if (i2 === textPIN.length) clearInterval(intervalPIN);
             }, 70);
 
             await new Promise(res => setTimeout(res, textPIN.length * 70 + 400));
@@ -283,6 +283,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 display.classList.add(`state-q${state}`);
                 await new Promise(res => setTimeout(res, 3000));
                 display.classList.remove(`state-q${state}`);
+                break;
+
+            case 4:
+                display.textContent = ""; // limpia el texto anterior
+                // --- Estado q2: Error -> No se ha insertado la tarjeta ---
+                display.classList.add("state-q4");
+
+                const textError2 = "NO PUEDES INSERTAR LA TARJETA 2 VECES";
+                let i3 = 0;
+                const interval2 = setInterval(() => {
+                    display.textContent += textError2[i3];
+                    i3++;
+                    if (i3 === textError2.length) clearInterval(interval2);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError2.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
         }
     }
