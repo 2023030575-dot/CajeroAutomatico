@@ -1,5 +1,11 @@
 .display.state-q0 {
-    animation: q0Anim 3s ease;
+    animation: q0Anim 5s ease forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: black;
+    font-family: 'Aldo the Apache';
 }
 .display.state-q1 {
     animation: q1Anim 3s ease;

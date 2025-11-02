@@ -11,3 +11,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Aldo the Apache';
+  src: url('../fonts/AldotheApache.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}

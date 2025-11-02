@@ -156,14 +156,32 @@ document.addEventListener("DOMContentLoaded", () => {
     async function animateState(state) {
         const display = document.querySelector(".display");
 
-        // Se puede adaptar la animación según el número del estado
         display.classList.add(`state-q${state}`);
         console.log(`Animando estado q${state}`);
 
-        // Duración de la animación (ajústala según tu CSS)
-        await new Promise(res => setTimeout(res, 3000));
+        // 🔹 Si es el estado q0, agregamos el efecto "Bienvenido"
+        if (state === 0) {
+            display.textContent = ""; // Limpiar antes de animar
+            display.addEventListener("animationend", function handler() {
+                const text = "BIENVENIDO";
+                let i = 0;
+
+                const interval = setInterval(() => {
+                    display.textContent += text[i];
+                    i++;
+                    if (i === text.length) clearInterval(interval);
+                }, 150);
+
+                // 🔹 Eliminar el listener después de ejecutarse una vez
+                display.removeEventListener("animationend", handler);
+            });
+        }
+
+        // Esperar duración de la animación (ajústala según tu CSS)
+        await new Promise(res => setTimeout(res, 10000));
 
         display.classList.remove(`state-q${state}`);
     }
+
 
 });
