@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Ejecutando proceso:", process);
 
         // 🔹 Estados vertedero (errores)
-        const sinkStates = [2, 4, 5, 7, 8, 10, 11, 12];
+        const sinkStates = [2, 4, 5, 7, 8, 11, 12];
 
         // 🔹 Obtener los clones actuales
         const clones = inputDiv.querySelectorAll(".cloned-btn");
@@ -163,13 +163,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 🔹 Validar que existan antes de usarlos
         if (display) {
-            display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4", "state-q5");
+            display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4", "state-q5", "state-q7", "state-q8", "state-q11", "state-q12");
             display.textContent = "";
             display.style.backgroundColor = "";
         }
 
         if (card) {
-            card.classList.remove("insert");
+            card.classList.remove("insert","out");
             card.style.display = "none";
         }
 
@@ -210,9 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 card.classList.add('insert');
 
                 card.addEventListener('animationend', () => {
-                    // 🔹 Termina la animación dejando parte visible
-                    card.style.display = "none";
-                    card.classList.remove('insert');
+                card.classList.remove('insert');
                 }, { once: true });
 
                 await new Promise(res => setTimeout(res, 4000));
@@ -430,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
 
-                case 8:
+            case 8:
                 display.textContent = ""; // limpia el texto anterior
                 display.classList.add("state-q8");
 
@@ -453,6 +451,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 dis.classList.remove("open");
                 
                 await new Promise(res => setTimeout(res, 3000));
+                break;
+                
+            case 10:
+                card.classList.add("out");
+                await new Promise(res => setTimeout(res, 4000));
+                // Opcional: limpia clases o deja visible la tarjeta fuera
+                card.classList.remove("out");
+                break;
+
+            case 11:
+                display.textContent = ""; // limpia el texto anterior
+                display.classList.add("state-q11");
+
+                const textError6 = "NO PUEDE INGRESAR LA CANTIDAD 2 VECES";
+                let i8 = 0;
+                const interval7 = setInterval(() => {
+                    display.textContent += textError6[i8];
+                    i8++;
+                    if (i8 === textError6.length) clearInterval(interval7);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError6.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
+                break;
+
+            case 12:
+                display.textContent = ""; // limpia el texto anterior
+                display.classList.add("state-q12");
+
+                const textError7 = "DEBE TOMAR SU DINERO PRIMERO";
+                let i9 = 0;
+                const interval8 = setInterval(() => {
+                    display.textContent += textError7[i9];
+                    i9++;
+                    if (i9 === textError7.length) clearInterval(interval8);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError7.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
         }
     }

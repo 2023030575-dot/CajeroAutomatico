@@ -32,7 +32,8 @@
     }
   }
 
-.display.state-q2, .display.state-q4, .display.state-q5, .display.state-q7, .display.state-q8{
+.display.state-q2, .display.state-q4, .display.state-q5,
+.display.state-q7, .display.state-q8, .display.state-q11, .display.state-q12{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,3 +97,22 @@
       letter-spacing: 0.5rem;
       color: rgb(49, 48, 51);
   }
+
+.card.out {
+  animation: outCard 4s ease forwards;
+}
+
+@keyframes outCard {
+  0% {
+    top: 30%;
+    opacity: 0; /* dentro de la ranura */
+  }
+  25% {
+    top: 30%;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 1; /* sale completamente */
+  }
+}
