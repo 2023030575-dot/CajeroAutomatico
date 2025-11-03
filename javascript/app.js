@@ -445,6 +445,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 await new Promise(res => setTimeout(res, textError5.length * 70 + 2000));
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
+
+            case 9:
+                const dis = document.querySelector(".dispenser")
+                const bil = document.querySelector(".bill") 
+                bil.classList.remove("out");
+                dis.classList.remove("open");
+                
+                await new Promise(res => setTimeout(res, 3000));
+                break;
         }
     }
 
