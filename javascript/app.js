@@ -429,6 +429,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 await new Promise(res => setTimeout(res, textError4.length * 70 + 2000));
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
+
+                case 8:
+                display.textContent = ""; // limpia el texto anterior
+                display.classList.add("state-q8");
+
+                const textError5 = "AUN NO HAY DINERO PARA TOMAR";
+                let i7 = 0;
+                const interval6 = setInterval(() => {
+                    display.textContent += textError5[i7];
+                    i7++;
+                    if (i7 === textError5.length) clearInterval(interval6);
+                }, 70);
+
+                await new Promise(res => setTimeout(res, textError5.length * 70 + 2000));
+                display.textContent = ""; // limpia el texto antes del siguiente estado
+                break;
         }
     }
 
