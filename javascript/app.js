@@ -491,6 +491,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 await new Promise(res => setTimeout(res, textError7.length * 70 + 2000));
                 display.textContent = ""; // limpia el texto antes del siguiente estado
                 break;
+
+            case 13:
+                const bills = document.querySelector(".bill");
+                const disp = document.querySelector(".dispenser");
+
+                // Determina el estado anterior
+                const prevState = process[process.length - 2]; // si "process" guarda los estados recorridos
+                console.log("Estado previo:"+prevState);
+                // --- Caso A: viene de q1, q3 o q9 → sacar tarjeta ---
+                if (["Insertar tarjeta", "Ingresar PIN", "Tomar dinero"].includes(prevState)) {
+                    card.classList.add("out");
+
+                    await new Promise(res => setTimeout(res, 4000)); // espera animación salida tarjeta
+                    card.classList.remove("out");
+                }
+
+                // --- Caso B: viene de q10 → tomar el dinero ---
+                else if (prevState === "Sacar tarjeta") {
+                    bills.classList.remove("out");
+                    disp.classList.remove("open");
+
+                    await new Promise(res => setTimeout(res, 3000)); // espera animación tomar dinero
+                }
+
+                // --- En todos los casos ---
+                // Muestra mensaje "VUELVA PRONTO"
+                display.textContent = ""; // limpia texto anterior
+                const farewell = "VUELVA PRONTO";
+                let i0 = 0;
+
+                const interval9 = setInterval(() => {
+                    display.textContent += farewell[i0];
+                    i0++;
+                    if (i0 === farewell.length) clearInterval(interval9);
+                }, 100);
+
+                await new Promise(res => setTimeout(res, farewell.length * 100 + 2000));
+
+                // Reset visual opcional
+                display.textContent = "";
+                break;
         }
     }
 

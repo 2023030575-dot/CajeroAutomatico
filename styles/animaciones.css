@@ -99,7 +99,7 @@
   }
 
 .card.out {
-  animation: outCard 4s ease forwards;
+  animation: outCard 3s ease forwards;
 }
 
 @keyframes outCard {
