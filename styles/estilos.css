@@ -323,5 +323,11 @@ body{
                 }
             
             .disabled {
+                opacity: 0.5;
                 pointer-events: none;  /* 🔹 Desactiva clics y eventos */
+                cursor:not-allowed;
             }
+
+                .cloned-btn.disabled{
+                    opacity: 1;
+                }
