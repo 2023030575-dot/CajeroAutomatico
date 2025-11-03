@@ -161,19 +161,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const dispenser = document.querySelector(".dispenser");
         const bill = document.querySelector(".bill");
 
-        // 🔹 Eliminar todas las clases de animación
-        display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4", "state-q5");
-        card.classList.remove("insert");
-        dispenser.classList.remove("open");
-        bill.classList.remove("out")
+        // 🔹 Validar que existan antes de usarlos
+        if (display) {
+            display.classList.remove("state-q0", "state-q1", "state-q2", "state-q3", "state-q4", "state-q5");
+            display.textContent = "";
+            display.style.backgroundColor = "";
+        }
 
-        // 🔹 Restaurar contenido y estilos
-        display.textContent = "";
-        display.style.backgroundColor = ""; // vuelve al color por defecto
-        card.style.display = "none"; // oculta la tarjeta
+        if (card) {
+            card.classList.remove("insert");
+            card.style.display = "none";
+        }
+
+        if (dispenser) dispenser.classList.remove("open");
+        if (bill) bill.classList.remove("out");
 
         console.log("🔄 Cajero reiniciado al estado inicial");
     }
+
 
     // --- 🔹 Animación del estado actual ---
     async function animateState(state) {
@@ -291,7 +296,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             case 4:
                 display.textContent = ""; // limpia el texto anterior
-                // --- Estado q2: Error -> No se ha insertado la tarjeta ---
                 display.classList.add("state-q4");
 
                 const textError2 = "NO PUEDES INSERTAR LA TARJETA 2 VECES";
@@ -412,7 +416,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             case 7:
                 display.textContent = ""; // limpia el texto anterior
-                // --- Estado q2: Error -> No se ha insertado la tarjeta ---
                 display.classList.add("state-q7");
 
                 const textError4 = "NO PUEDES INGRESAR EL PIN 2 VECES";
