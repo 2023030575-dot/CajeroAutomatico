@@ -321,3 +321,7 @@ body{
                     color: white;
                     box-shadow: 0 0 10px rgb(7, 214, 0, 0.8);
                 }
+            
+            .disabled {
+                pointer-events: none;  /* 🔹 Desactiva clics y eventos */
+            }

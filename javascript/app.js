@@ -68,6 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // 🔹 DESACTIVAR botones durante la simulación
+        disableButtons(true);
+
         automata.restart();
 
         console.log("Ejecutando proceso:", process);
@@ -101,6 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.warn(`Estado vertedero alcanzado: q${automata.state}. Proceso detenido.`);
                 badProcess();
                 resetCajero();
+                // 🔹 REACTIVAR botones al finalizar la ejecución
+                disableButtons(false);
                 return;
             }
         }
@@ -112,13 +117,15 @@ document.addEventListener("DOMContentLoaded", () => {
             console.warn(`Proceso incorrecto: terminó en q${automata.state} en lugar de q13.`);
             badProcess();
             resetCajero();
-
+            // 🔹 REACTIVAR botones al finalizar la ejecución
+            disableButtons(false);
             return;
         } else {
             console.log(`Proceso correcto: terminó en q${automata.state}`);
             correctProcess();
             resetCajero();
-            
+            // 🔹 REACTIVAR botones al finalizar la ejecución
+            disableButtons(false);
             return;
         }
     });
@@ -533,6 +540,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 display.textContent = "";
                 break;
         }
+    }
+
+    function disableButtons(state) {
+        const allOptionBtns = document.querySelectorAll(".option-btn");
+        const allClonedBtns = document.querySelectorAll(".cloned-btn");
+        const allBtns = [...allOptionBtns, ...allClonedBtns, startBtn, deleteBtn];
+
+        allBtns.forEach(btn => {
+            if (state) btn.classList.add("disabled");
+            else btn.classList.remove("disabled");
+        });
     }
 
 });
