@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 🔹 Verificar si el estado final NO es el estado de aceptación
         if (automata.state !== 13) {
             console.warn(`Proceso incorrecto: terminó en q${automata.state} en lugar de q13.`);
+            alert("⚠️ No has llegaste al estado final (Tarjeta y dinero fuera).");
             badProcess();
             resetCajero();
             // 🔹 REACTIVAR botones al finalizar la ejecución
@@ -266,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 🔹 Seleccionamos los botones del keypad
             const digits = document.querySelectorAll(".digit-btn");
-            const pinSequence = ["1", "2", "3", "4"];
+            const pinSequence = ["8", "3", "2", "8"];
 
             // 🔹 Animar la presión de botones y mostrar asteriscos
             for (let j = 0; j < pinSequence.length; j++) {
@@ -507,7 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const prevState = process[process.length - 2]; // si "process" guarda los estados recorridos
                 console.log("Estado previo:"+prevState);
                 // --- Caso A: viene de q1, q3 o q9 → sacar tarjeta ---
-                if (["Insertar tarjeta", "Ingresar PIN", "Tomar dinero"].includes(prevState)) {
+                if (["Insertar tarjeta", "Ingresar PIN", "Tomar dinero", "Sacar tarjeta"].includes(prevState)) {
                     card.classList.add("out");
 
                     await new Promise(res => setTimeout(res, 4000)); // espera animación salida tarjeta
